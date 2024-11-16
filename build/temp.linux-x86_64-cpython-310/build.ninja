@@ -1,0 +1,37 @@
+ninja_required_version = 1.3
+cxx = c++
+nvcc = /usr/local/cuda-12.4/bin/nvcc
+
+cflags = -pthread -B /root/anaconda3/envs/shadowKV/compiler_compat -Wno-unused-result -Wsign-compare -DNDEBUG -g -fwrapv -O2 -Wall -fPIC -O2 -isystem /root/anaconda3/envs/shadowKV/include -fPIC -O2 -isystem /root/anaconda3/envs/shadowKV/include -fPIC -I/remote-home/pengyichen/ShadowKV/3rdparty/cutlass/include -I/remote-home/pengyichen/ShadowKV/3rdparty/cutlass/examples/common -I/remote-home/pengyichen/ShadowKV/3rdparty/cutlass/tools/util/include -I/remote-home/pengyichen/ShadowKV/kernels -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include/torch/csrc/api/include -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include/TH -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include/THC -I/usr/local/cuda-12.4/include -I/root/anaconda3/envs/shadowKV/include/python3.10 -c
+post_cflags = -std=c++17 -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=shadowkv -D_GLIBCXX_USE_CXX11_ABI=0
+cuda_cflags = -I/remote-home/pengyichen/ShadowKV/3rdparty/cutlass/include -I/remote-home/pengyichen/ShadowKV/3rdparty/cutlass/examples/common -I/remote-home/pengyichen/ShadowKV/3rdparty/cutlass/tools/util/include -I/remote-home/pengyichen/ShadowKV/kernels -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include/torch/csrc/api/include -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include/TH -I/root/anaconda3/envs/shadowKV/lib/python3.10/site-packages/torch/include/THC -I/usr/local/cuda-12.4/include -I/root/anaconda3/envs/shadowKV/include/python3.10 -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -std=c++17 --expt-relaxed-constexpr -lcuda -lcudart -DTORCH_API_INCLUDE_EXTENSION_H '-DPYBIND11_COMPILER_TYPE="_gcc"' '-DPYBIND11_STDLIB="_libstdcpp"' '-DPYBIND11_BUILD_ABI="_cxxabi1011"' -DTORCH_EXTENSION_NAME=shadowkv -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_80,code=compute_80 -gencode=arch=compute_80,code=sm_80
+cuda_dlink_post_cflags = 
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  depfile = $out.d
+  deps = gcc
+  command = $nvcc --generate-dependencies-with-compile --dependency-output $out.d $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+
+
+build /remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/batch_gather_gemm.o: cuda_compile /remote-home/pengyichen/ShadowKV/kernels/batch_gather_gemm.cu
+build /remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/batch_gemm_softmax.o: cuda_compile /remote-home/pengyichen/ShadowKV/kernels/batch_gemm_softmax.cu
+build /remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/gather_copy.o: cuda_compile /remote-home/pengyichen/ShadowKV/kernels/gather_copy.cu
+build /remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/main.o: cuda_compile /remote-home/pengyichen/ShadowKV/kernels/main.cu
+build /remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/rope.o: cuda_compile /remote-home/pengyichen/ShadowKV/kernels/rope.cu
+build /remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/rope_new.o: cuda_compile /remote-home/pengyichen/ShadowKV/kernels/rope_new.cu
+
+
+
+
+
+

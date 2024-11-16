@@ -1,0 +1,7 @@
+# ninja log v5
+13	44249	1731650909645773743	/remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/rope.o	9ea90a11c2dcaf8c
+13	44340	1731650909739801854	/remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/rope_new.o	b06eb79bc823eac8
+12	46611	1731650912008882270	/remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/gather_copy.o	23df4d4307786ae4
+12	47745	1731650913128272575	/remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/main.o	3c3953d0127d143d
+29	53994	1731651007542832800	/remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/batch_gemm_softmax.o	61dfbb32f5879b10
+29	55125	1731651008668059037	/remote-home/pengyichen/ShadowKV/build/temp.linux-x86_64-cpython-310/kernels/batch_gather_gemm.o	57afa6a1ea9a94f8
