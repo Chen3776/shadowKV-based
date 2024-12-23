@@ -1,7 +1,7 @@
 <div align="center">
 <h1><img src="static/images/ShadowKV.png" height="40px"> ShadowKV: KV Cache in Shadows for High-Throughput Long-Context LLM Inference</h1>
 
-**I am following the work ShadowKV, and took the readme.md from their git repo. This repo is for my personal learning, please contact me if offended.**
+**I am following the work ShadowKV, and took the readme.md from their git repo. This repo is for my personal learning, please contact me if you are offended.**
 
 **training-free, high-throughput long-context LLM inference**
 </div>
